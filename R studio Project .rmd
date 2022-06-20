@@ -1,0 +1,343 @@
+---
+title: "uppercase id"
+author: "COBBY"
+date: "13/03/2022"
+output:
+  word_document: default
+  html_document: default
+---
+
+```{r}
+library(readr)
+```
+
+
+```{r}
+library(Hmisc)
+```
+
+
+```{r}
+library(dplyr)
+```
+
+
+```{r}
+library(stringr)
+
+```
+
+
+```{r}
+analysisData = read.csv("analysis.csv", stringsAsFactors = T)
+```
+
+
+
+```{r}
+analysisData
+```
+
+
+
+
+
+
+
+
+```{r}
+escapeData = read.csv("escapes.csv", stringsAsFactors = T)
+```
+
+
+#Columns Aquaculture.Type contain only one value so they are useless
+```{r}
+escapeData$Aquaculture.Type <- NULL
+```
+
+
+#replacing unknown in Average.Weight Column(escape.csv) with NA
+```{r}
+escapeData$Average.Weight[escapeData$Average.Weight == "unknown"] <- NA
+```
+
+
+#replacing unknown in Age Column(escape.csv) with NA
+```{r}
+escapeData$Age[escapeData$Age == "unknown"] <- NA
+```
+
+
+#replacing NA in Age with the Mean/median
+```{r}
+escapeData$Age <- impute((escapeData$Age), median)
+```
+
+```{r}
+escapeData <- escapeData %>% mutate(Age = replace(Age, match("2000524", Escape.ID), "9 months"))
+```
+
+
+#replacing NA in Age with the Mean/median
+```{r}
+escapeData$Average.Weight <- impute((escapeData$Average.Weight), median)
+```
+
+
+```{r}
+escapeData <- escapeData%>% mutate(Age = replace(Age, match("2000401", Escape.ID), "20 months"))
+```
+
+
+```{r}
+escapeData <- escapeData%>% mutate(Age = replace(Age, match("2000492", Escape.ID), "3 months"))
+```
+
+
+```{r}
+escapeData <- escapeData%>% mutate(Age = replace(Age, match("2000519", Escape.ID), "13 months"))
+```
+
+
+```{r}
+escapeData <- escapeData%>% mutate(Age = replace(Age, match("2000099", Escape.ID), "18 months"))
+```
+
+
+```{r}
+escapeData <- escapeData%>% mutate(Age = replace(Age, match("2000448", Escape.ID), "14 months"))
+```
+
+
+```{r}
+escapeData <- escapeData%>% mutate(Age = replace(Age, match("20005111", Escape.ID), "6 months"))
+```
+
+
+```{r}
+escapeData <- escapeData%>% mutate(Age = replace(Age, match("2000442", Escape.ID), "14 months"))
+```
+
+
+```{r}
+escapeData <- escapeData%>% mutate(Age = replace(Age, match("2000086", Escape.ID), "7 months"))
+```
+
+
+```{r}
+escapeData <- escapeData%>% mutate(Age = replace(Age, match("2000516", Escape.ID), "3 months"))
+```
+
+
+```{r}
+escapeData <- escapeData%>% mutate(Age = replace(Age, match("2000175", Escape.ID), "12 months"))
+```
+
+
+```{r}
+escapeData <- escapeData%>% mutate(Age = replace(Age, match("2000521", Escape.ID), "18 months"))
+```
+
+
+```{r}
+escapeData <- escapeData%>% mutate(Age = replace(Age, match("2000512", Escape.ID), "6 months"))
+```
+
+
+```{r}
+escapeData <- escapeData%>% mutate(Age = replace(Age, match("2000524", Escape.ID), "9 months"))
+```
+
+
+```{r}
+escapeData <- escapeData%>% mutate(Age = replace(Age, match("2000355", Escape.ID), "20 months"))
+```
+
+
+```{r}
+escapeData <- escapeData%>% mutate(Age = replace(Age, match("2000347", Escape.ID), "21 months"))
+```
+
+
+```{r}
+escapeData <- escapeData%>% mutate(Age = replace(Age, match("2000352", Escape.ID), "10 months"))
+```
+
+
+```{r}
+escapeData <- escapeData%>% mutate(Age = replace(Age, match("2000382", Escape.ID), "9 months"))
+```
+
+
+```{r}
+escapeData <- escapeData%>% mutate(Age = replace(Age, match("2000131", Escape.ID), "6 months"))
+```
+```{r}
+escapeData <- escapeData%>% mutate(Age = replace(Age, match("2000131", Escape.ID), "6 months"))
+
+```
+
+```{r}
+escapeData <- escapeData%>% mutate(Age = replace(Age, match("2000363", Escape.ID), "6 months"))
+```
+
+```{r}
+escapeData <- escapeData%>% mutate(Age = replace(Age, match("2000399", Escape.ID), "6 months"))
+
+```
+
+```{r}
+escapeData <- escapeData%>% mutate(Age = replace(Age, match("2000363", Escape.ID), "6 months"))
+
+```
+
+```{r}
+escapeData <- escapeData%>% mutate(Age = replace(Age, match("2000397", Escape.ID), "4 months"))
+```
+
+```{r}
+escapeData <- escapeData%>% mutate(Age = replace(Age, match("2000484", Escape.ID), "6 months"))
+```
+
+```{r}
+escapeData <- escapeData%>% mutate(Age = replace(Age, match("2000364", Escape.ID), "6 months"))
+```
+
+```{r}
+escapeData <- escapeData%>% mutate(Age = replace(Age, match("2000078", Escape.ID), "6 months"))
+```
+
+```{r}
+escapeData <- escapeData%>% mutate(Age = replace(Age, match("2000339", Escape.ID), "6 months"))
+
+```
+
+```{r}
+escapeData <- escapeData%>% mutate(Age = replace(Age, match("2000322", Escape.ID), "6 months"))
+```
+
+
+```{r}
+lowerAll <- function (dataset) {
+   for ( i in 1:ncol(dataset)) {
+       if (class(dataset[,i])=="factor") 
+{dataset[,i] <- str_to_lower(dataset[,i])} 
+   }
+   return(dataset)
+}
+
+```
+
+
+
+```{r}
+escapeData <- lowerAll(escapeData)
+analysisData <- lowerAll(analysisData)
+```
+
+
+
+```{r}
+escapePlus <- merge(escapeData, analysisData, by="Site.Name", all=TRUE)
+```
+
+```{r}
+write.table(escapePlus, file="escapePlus.csv", sep=",")
+```
+
+```{r}
+library(ggplot2) 
+```
+
+
+#exploratory data analysis on analysisData.csv
+```{r}
+summary(analysisData$c2)
+summary(analysisData$c3)
+summary(analysisData$c4)
+summary(analysisData$c5)
+summary(analysisData$c6)
+summary(analysisData$c7)
+```
+
+
+###from the exploratory data analysis (summary) we can tell there is a normal distribution
+### because both the mean and the median are close in figures
+
+```{r}
+IQR(analysisData$c2)
+IQR(analysisData$c3)
+IQR(analysisData$c5)
+IQR(analysisData$c6)
+IQR(analysisData$c7)
+```
+
+
+```{r}
+library(ggplot2)
+```
+
+
+
+```{r}
+range(analysisData$c2)
+range(analysisData$c3)
+range(analysisData$c4)
+range(analysisData$c5)
+range(analysisData$c6)
+range(analysisData$c7)
+range(analysisData$year)
+```
+##the year range spans from 1998 to 2020
+
+
+
+```{r}
+var(analysisData$c2)
+sd(analysisData$c2)
+
+##optional
+```
+
+
+```{r}
+p <- ggplot(data=analysisData, aes(x=c2))
+p <- p+geom_histogram()
+```
+
+
+
+```{r}
+p
+```
+
+```{r}
+p <- ggplot(data=analysisData, aes(y=c6))
+p <- p+geom_boxplot()
+```
+
+
+```{r}
+p
+```
+
+
+#plotting c2 against c3 in analysis.csv
+```{r}
+p <- ggplot(data=analysisData, 
+aes(x=c2, y=c3))
+p <- p+geom_point()
+p
+```
+
+
+
+```{r}
+cor(analysisData$c2,analysisData$c3)
+```
+## from the value above we can see c2 and c3 of AnalysisData is correlated 
+
+
+
+
+
